@@ -38,28 +38,28 @@ public class Player : MonoBehaviour
 	
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.tag == "Unit")
-		{
-			int index = other.GetComponent<LoadNeighbours>().index;
-			
-			for (int i = -5; i < 5; i++)
-			{
-				if(Generator._units.TryGetValue(index + i, out Unit unit))
-					unit.GameObject.SetActive(true);
-			}
-			
-			for (int i = 0; i < 5; i++)
-			{
-				Debug.Log((index + i) * Generator.gridSize);
-				if(Generator._units.TryGetValue((index + i) * Generator.gridSize, out Unit unit))
-					unit.GameObject.SetActive(true);
-			}
-			for (int i = -6; i < -1; i++)
-			{
-				if(Generator._units.TryGetValue(index - i - Generator.gridSize, out Unit unit))
-					unit.GameObject.SetActive(true);
-			}
-		}
+		// if (other.tag == "Unit")
+		// {
+		// 	int index = other.GetComponent<LoadNeighbours>().index;
+		// 	
+		// 	for (int i = -5; i < 5; i++)
+		// 	{
+		// 		if(Generator._units.TryGetValue(index + i, out Unit unit))
+		// 			unit.GameObject.SetActive(true);
+		// 	}
+		// 	
+		// 	for (int i = 0; i < 5; i++)
+		// 	{
+		// 		Debug.Log((index + i) * Generator.gridSize);
+		// 		if(Generator._units.TryGetValue((index + i) * Generator.gridSize, out Unit unit))
+		// 			unit.GameObject.SetActive(true);
+		// 	}
+		// 	for (int i = -6; i < -1; i++)
+		// 	{
+		// 		if(Generator._units.TryGetValue(index - i - Generator.gridSize, out Unit unit))
+		// 			unit.GameObject.SetActive(true);
+		// 	}
+		// }
 	}
 	
 }

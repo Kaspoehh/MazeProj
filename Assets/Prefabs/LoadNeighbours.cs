@@ -9,4 +9,11 @@ public class LoadNeighbours : MonoBehaviour
     public List<GameObject> toDestroyBottom = new List<GameObject>();
     public List<GameObject> toDestroyRight = new List<GameObject>();
     public List<GameObject> toDestroyLeft = new List<GameObject>();
+    
+    public List<GameObject> toDestroyUp1 = new List<GameObject>();
+    public List<GameObject> toDestroyBottom1 = new List<GameObject>();
+    public List<GameObject> toDestroyRight1 = new List<GameObject>();
+    public List<GameObject> toDestroyLeft1 = new List<GameObject>();
+
+    
 }

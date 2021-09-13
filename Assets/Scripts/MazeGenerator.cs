@@ -1,11 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Resources;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -236,18 +232,66 @@ public class MazeGenerator : MonoBehaviour
                 //     mazeObj.gameObject.SetActive(false);
                 mazeObj.transform.SetParent(mazeParent.transform);
                 mazeObj.name = count.ToString();
+                var Walls = units[count].Walls;
                 
-                if (!units[count].Walls.wallRight)
-                    Destroy(nbLoader.toDestroyRight[0]);
-                if(!units[count].Walls.wallLeft)
-                    Destroy(nbLoader.toDestroyLeft[0]);
-                if(!units[count].Walls.wallTop)
-                    Destroy(nbLoader.toDestroyUp[0]);
-                if(!units[count].Walls.wallBottom)
-                    Destroy(nbLoader.toDestroyBottom[0]);
-                 
-                if(count != 0)
-                    mazeObj.SetActive(false);
+                if (!units[count].isFinish)
+                {
+
+                    if (units[count].Walls.wallRight)
+                        for (int i = 0; i < nbLoader.toDestroyRight.Count; i++)
+                        {
+                            //Destroy(nbLoader.toDestroyRight[i]);
+                            nbLoader.toDestroyRight[i].SetActive(false);
+                        }
+                    if (!units[count].Walls.wallRight)
+                        for (int i = 0; i < nbLoader.toDestroyRight1.Count; i++)
+                        {
+                            //Destroy(nbLoader.toDestroyRight1[i]);
+                            nbLoader.toDestroyRight1[i].SetActive(false);
+                        }
+
+                    if (units[count].Walls.wallLeft)
+                        for (int i = 0; i < nbLoader.toDestroyLeft.Count; i++)
+                        {
+                            //Destroy(nbLoader.toDestroyLeft[i]);
+                            nbLoader.toDestroyLeft[i].SetActive(false);
+                        }
+                    if (!units[count].Walls.wallLeft)
+                    {
+                        for (int i = 0; i < nbLoader.toDestroyLeft1.Count; i++)
+                        {
+                            //Destroy(nbLoader.toDestroyLeft1[i]);
+                            nbLoader.toDestroyLeft1[i].SetActive(false);
+                        }
+                    }
+                    if (units[count].Walls.wallTop)
+                        for (int i = 0; i < nbLoader.toDestroyUp.Count; i++)
+                        {
+                            //Destroy(nbLoader.toDestroyUp[i]);
+                            nbLoader.toDestroyUp[i].SetActive(false);
+                        }
+                    if (!units[count].Walls.wallTop)
+                        for (int i = 0; i < nbLoader.toDestroyUp1.Count; i++)
+                        {
+                            //Destroy(nbLoader.toDestroyUp1[i]);
+                            nbLoader.toDestroyUp1[i].SetActive(false);
+                        }
+                    if (units[count].Walls.wallBottom)
+                        for (int i = 0; i < nbLoader.toDestroyBottom.Count; i++)
+                        {
+                            //Destroy(nbLoader.toDestroyBottom[i]);
+                            nbLoader.toDestroyBottom[i].SetActive(false);
+                        }
+                    if (!units[count].Walls.wallBottom)
+                        for (int i = 0; i < nbLoader.toDestroyBottom1.Count; i++)
+                        {
+                            // Destroy(nbLoader.toDestroyBottom1[i]);
+                            nbLoader.toDestroyBottom1[i].SetActive(false);
+                        }
+                }
+
+                // if(count != 0)
+                //     mazeObj.SetActive(false);
                 count++;
             }
         }        
@@ -281,54 +325,7 @@ public class MazeGenerator : MonoBehaviour
             {
                 List<int> testStack = stack;
                 testStack.Add(currentPos);
-                
-                /*for (int k = 1; k < 1000; k++)
-                {
-                    Dictionary<Directions, int> testDirections = new Dictionary<Directions, int>();
 
-                    if (possibleDirs.Contains(Directions.UP))
-                    {
-                        int size = GetPossibleDirectionsWalkable(currentPos + (gridSize * k), testStack).Count;
-                        testDirections.Add(Directions.UP, size);
-                    }
-                    if (possibleDirs.Contains(Directions.DOWN))
-                    {
-                        int size = GetPossibleDirectionsWalkable(currentPos - (gridSize * k), testStack).Count;
-                        testDirections.Add(Directions.DOWN, size);
-                    }
-                    if (possibleDirs.Contains(Directions.LEFT))
-                    {
-                        int size = GetPossibleDirectionsWalkable(currentPos - k, testStack).Count;
-                        testDirections.Add(Directions.LEFT, size);
-                    }
-                    if (possibleDirs.Contains(Directions.RIGHT))
-                    {
-                        int size = GetPossibleDirectionsWalkable(currentPos + k, testStack).Count;
-                        testDirections.Add(Directions.RIGHT, size);
-                    }
-                
-                    int longest = 0;
-                    int theSame = 0;
-                    for (int j = 0; j < testDirections.Count; j++)
-                    {
-                        if (testDirections.ElementAt(j).Value == longest)
-                        {
-                            theSame++;
-                        }
-                        if (testDirections.ElementAt(j).Value > longest)
-                        {
-                            longest = testDirections.ElementAt(j).Value;
-                            dir = testDirections.ElementAt(j).Key;
-                        }
-                    }
-
-                    if (theSame == 0)
-                    {
-                        Debug.Log("Break");
-                        break;
-                    }
-                }
-                */
                 int dirIndex = Random.Range(0, possibleDirs.Count);
                 Directions dir = possibleDirs[dirIndex];
                 
@@ -421,10 +418,7 @@ public class MazeGenerator : MonoBehaviour
 
     #endregion
 
-    private void Update()
-    {
-        
-    }
+ 
     
     
     
