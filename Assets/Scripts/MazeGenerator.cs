@@ -38,16 +38,12 @@ public class MazeGenerator : MonoBehaviour
         {
             for (int x = 0; x < gridSize; x++)
             {
-                Image img = Instantiate(unitImage, new Vector3(x * 100, y * 100), Quaternion.identity, this.transform);
-                Unit unit = new Unit(img, UnitType.Wall, false);
-                img.gameObject.name = "Unit: " + x + " " + y;
-                unit.Image.transform.position = new Vector3(x * 100, y * 100);
+                Unit unit = new Unit(UnitType.Wall, false);
                 unit.Walls = new Walls();
                 unit.Walls.wallBottom = true;
                 unit.Walls.wallLeft = true;
                 unit.Walls.wallRight = true;
                 unit.Walls.wallTop = true;
-                img.transform.GetChild(0).GetComponent<Text>().text = index.ToString();
                 _units.Add(index, unit);
                 index++;
             }
@@ -67,7 +63,6 @@ public class MazeGenerator : MonoBehaviour
         List<int> stack = new List<int>();
         stack.Add(currentPos);
         _units.ElementAt(currentPos).Value.UnitType = UnitType.Walkable;
-        //_units.ElementAt(currentPos).Value.Image.color = Color.red;
 
         
         for (int i = 0; i < gridSize * gridSize; i++)
@@ -100,7 +95,6 @@ public class MazeGenerator : MonoBehaviour
                 
                 stack.Add(currentPos);
                 _units.ElementAt(currentPos).Value.UnitType = UnitType.Walkable;
-                //_units.ElementAt(currentPos).Value.Image.color = Color.red;
                     //Debug.Log("currentPos: " + currentPos + " lastPos: " + lastIndex);
                 
 
@@ -124,7 +118,6 @@ public class MazeGenerator : MonoBehaviour
             units.Add(_units.ElementAt(i).Value);
         } 
         CreateFinish();
-        VisualizeWalls();
         VisualizeMaze();
     }
 
@@ -181,36 +174,14 @@ public class MazeGenerator : MonoBehaviour
 
         return possibledirections;
     }
-
-    private void VisualizeWalls()
-    {
-        for (int i = 0; i < units.Count; i++)
-        {
-            if (units[i].Walls.wallTop == false)
-            {
-                units[i].Image.transform.GetChild(2).gameObject.SetActive(false);
-            }
-            if (units[i].Walls.wallBottom == false)
-            {
-                units[i].Image.transform.GetChild(4).gameObject.SetActive(false);
-            }
-            if (units[i].Walls.wallRight == false)
-            {
-                units[i].Image.transform.GetChild(3).gameObject.SetActive(false);
-            }
-            if (units[i].Walls.wallLeft == false)
-            {
-                units[i].Image.transform.GetChild(1).gameObject.SetActive(false);
-            }
-        }
-    }
+    
     
 
     #endregion
 
     #region Vizualize Maze 3D
     
-    private void VisualizeMaze()
+    public void VisualizeMaze()
     {
         int count = 0;
         for (int y = 0; y < gridSize; y++)
@@ -227,7 +198,6 @@ public class MazeGenerator : MonoBehaviour
                 var nbLoader = mazeObj.GetComponent<LoadNeighbours>();
                 nbLoader.index = count;
                 nbLoader.mazeGenerator = this;
-                _units.ElementAt(count).Value.GameObject = mazeObj;
                 // if(count != 0)                
                 //     mazeObj.gameObject.SetActive(false);
                 mazeObj.transform.SetParent(mazeParent.transform);
@@ -351,14 +321,12 @@ public class MazeGenerator : MonoBehaviour
                 currentPos = newPos;
                 stack.Add(currentPos);
                 //_units.ElementAt(currentPos).Value.UnitType = UnitType.Walkable;
-                //_units.ElementAt(currentPos).Value.Image.color = Color.red;
                 //Debug.Log("currentPos: " + currentPos + " lastPos: " + lastIndex);
             }
             else
             {
                 Debug.Log(GetPossibleDirectionsWalkable(currentPos, stack).Count);
                 _units.ElementAt(currentPos).Value.isFinish = true;
-                _units.ElementAt(currentPos).Value.Image.color = Color.green;
                 Debug.Log("No dirs left end pos: " + currentPos);
             }
         }
@@ -435,18 +403,14 @@ public enum Directions
 public class Unit
 {
     //private UnitPos unitPos;
-    public Image Image;
     public UnitType UnitType;
     public Walls Walls;
-    public GameObject GameObject;
-    public LoadNeighbours NeighbourLoader;
     public bool isFinish = false;
     
-    public Unit(/*UnitPos unitPos,*/ Image image, UnitType unitType, bool isFinish)
+    public Unit(/*UnitPos unitPos,*/  UnitType unitType, bool isFinish)
     {
         //this.unitPos = unitPos;
         this.UnitType = unitType;
-        this.Image = image;
         this.isFinish = isFinish;
     }
 }
