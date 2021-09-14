@@ -30,7 +30,7 @@ public class MazeGenerator : MonoBehaviour
 
     #region Create Maze
     
-    private void CreateGrid()
+    public void CreateGrid()
     {
         int index = 0;
         

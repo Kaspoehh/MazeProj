@@ -8,6 +8,13 @@ using UnityEngine;
 public class SaveLoadMaze : MonoBehaviour
 {
     [SerializeField] private string saveName;
+
+    [ContextMenu("Create Maze")]
+    public void CreateMaze()
+    {
+        MazeGenerator _mazeGenerator = this.GetComponent<MazeGenerator>();
+        _mazeGenerator.CreateGrid();
+    }
     [ContextMenu("Save")]
     public void Save()
     {
